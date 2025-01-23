@@ -8,11 +8,15 @@ import Foundation
 
 class CategoryListViewModel: ObservableObject {
     @Published var categories: [Categories] = []
+    @Published var meals: [Meals] = []
+    @Published var defaultCategory: String?
     private var cancellables = Set<AnyCancellable>()
     private let fetchItemsUseCase: FetchItemsUseCase
+    private let fetchMealUseCase: FetchMealUseCase
 
-    init(fetchItemsUseCase: FetchItemsUseCase = FetchItemsUseCaseImpl()) {
+    init(fetchItemsUseCase: FetchItemsUseCase = FetchItemsUseCaseImpl(), fetchMealUseCase: FetchMealUseCase = FetchMealUseCaseImpl()) {
         self.fetchItemsUseCase = fetchItemsUseCase
+        self.fetchMealUseCase = fetchMealUseCase
     }
 
     func loadItems() {
@@ -24,6 +28,24 @@ class CategoryListViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] categories in
                 self?.categories = categories
+                if let defaultCategory = categories.first?.strCategory {
+                    self?.defaultCategory = defaultCategory
+                    self?.loadMeal(category: defaultCategory)
+                }
+            })
+            .store(in: &cancellables)
+    }
+    
+    func loadMeal(category: String) {
+        fetchMealUseCase.execute(category: category)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    print("Error loading items: \(error)")
+                    self.meals = []
+                }
+            }, receiveValue: { [weak self] meals in
+                self?.meals = meals
             })
             .store(in: &cancellables)
     }
