@@ -9,6 +9,7 @@ import Foundation
 enum APIEndpoint {
     case getCategory
     case search(category: String)
+    case allMeals
     
     var path: String {
         switch self {
@@ -16,12 +17,14 @@ enum APIEndpoint {
             return "/categories.php"
         case .search(let category):
             return "/search.php?s=\(category)"
+        case .allMeals:
+            return "/search.php?s"
         }
     }
     
     var method: String {
         switch self {
-        case .getCategory, .search:
+        case .getCategory, .search, .allMeals:
             return "GET"
         }
     }
