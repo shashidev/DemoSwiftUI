@@ -19,6 +19,10 @@ struct CategoryResponse : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         categories = try values.decodeIfPresent([Categories].self, forKey: .categories)
     }
+    
+    init(categories : [Categories]?) {
+        self.categories = categories
+    }
 
 }
 
