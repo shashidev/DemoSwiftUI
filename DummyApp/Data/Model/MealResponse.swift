@@ -51,5 +51,24 @@ struct Meals : Codable, Identifiable {
         strMealThumb = try values.decodeIfPresent(String.self, forKey: .strMealThumb)
     }
     
+    init(idMeal : String? =  nil,
+         strMeal : String? = nil,
+         strDrinkAlternate : String? = nil,
+         strCategory : String? = nil,
+         strArea : String? = nil,
+         strInstructions : String? = nil,
+         strMealThumb : String? = nil) {
+        
+        self.idMeal = idMeal
+        self.strMeal = strMeal
+        self.strDrinkAlternate = strDrinkAlternate
+        self.strCategory = strCategory
+        self.strArea = strArea
+        self.strInstructions = strInstructions
+        self.strMealThumb = strMealThumb
+    }
+    
     var id: String { idMeal ?? "" }
+    
+    
 }

@@ -19,6 +19,10 @@ struct CategoryResponse : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         categories = try values.decodeIfPresent([Categories].self, forKey: .categories)
     }
+    
+    init(categories : [Categories]?) {
+        self.categories = categories
+    }
 
 }
 
@@ -46,7 +50,7 @@ struct Categories : Codable, Identifiable {
 
     var id: String { idCategory ?? "" }
     
-    init(idCategory : String?, strCategory : String?, strCategoryThumb : String?, strCategoryDescription : String?) {
+    init(idCategory : String? = nil, strCategory : String? = nil, strCategoryThumb : String? = nil, strCategoryDescription : String? = nil) {
         self.idCategory = idCategory
         self.strCategory = strCategory
         self.strCategoryThumb = strCategoryThumb
