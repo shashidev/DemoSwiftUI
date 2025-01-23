@@ -2,8 +2,6 @@
 //  MealListView.swift
 //  DummyApp
 //
-//  Created by Shashi Kumar on 23/01/25.
-//
 
 import SwiftUI
 

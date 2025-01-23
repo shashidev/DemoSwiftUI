@@ -8,7 +8,7 @@ import SwiftUI
 struct DummyAppApp: App {
     var body: some Scene {
         WindowGroup {
-            CategoriesListView()
+            HomeView()
         }
     }
 }

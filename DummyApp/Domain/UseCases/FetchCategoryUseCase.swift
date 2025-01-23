@@ -7,12 +7,12 @@ import Foundation
 import Combine
 
 
-protocol FetchItemsUseCase {
+protocol FetchCategoryUseCase {
     func execute() -> AnyPublisher<[Categories], NetworkError>
 }
 
 
-class FetchItemsUseCaseImpl: FetchItemsUseCase {
+class FetchCategoryUseCaseImpl: FetchCategoryUseCase {
     private let repository: CategoryRepository
 
     init(repository: CategoryRepository = CategoryRepositoryImpl()) {
@@ -20,6 +20,6 @@ class FetchItemsUseCaseImpl: FetchItemsUseCase {
     }
 
     func execute() -> AnyPublisher<[Categories], NetworkError> {
-        return repository.fetchItems()
+        return repository.fetchCategories()
     }
 }

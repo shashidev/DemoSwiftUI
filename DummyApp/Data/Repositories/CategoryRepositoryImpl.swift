@@ -7,9 +7,6 @@
 import Foundation
 import Combine
 
-protocol CategoryRepository {
-    func fetchItems() -> AnyPublisher<[Categories], NetworkError>
-}
 
 class CategoryRepositoryImpl: CategoryRepository {
     
@@ -20,7 +17,7 @@ class CategoryRepositoryImpl: CategoryRepository {
     }
     
     
-    func fetchItems() -> AnyPublisher<[Categories], NetworkError> {
+    func fetchCategories() -> AnyPublisher<[Categories], NetworkError> {
         return networking.request(endpoint: .getCategory)
             .tryMap { (response: CategoryResponse) -> [Categories] in
                 guard let items = response.categories else {

@@ -6,15 +6,15 @@
 import Combine
 import Foundation
 
-class CategoryListViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
     @Published var categories: [Categories] = []
     @Published var meals: [Meals] = []
     @Published var defaultCategory: String?
     private var cancellables = Set<AnyCancellable>()
-    private let fetchItemsUseCase: FetchItemsUseCase
+    private let fetchItemsUseCase: FetchCategoryUseCase
     private let fetchMealUseCase: FetchMealUseCase
 
-    init(fetchItemsUseCase: FetchItemsUseCase = FetchItemsUseCaseImpl(), fetchMealUseCase: FetchMealUseCase = FetchMealUseCaseImpl()) {
+    init(fetchItemsUseCase: FetchCategoryUseCase = FetchCategoryUseCaseImpl(), fetchMealUseCase: FetchMealUseCase = FetchMealUseCaseImpl()) {
         self.fetchItemsUseCase = fetchItemsUseCase
         self.fetchMealUseCase = fetchMealUseCase
     }
