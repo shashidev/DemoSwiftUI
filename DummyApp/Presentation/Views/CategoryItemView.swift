@@ -18,3 +18,12 @@ struct CategoryItemView: View {
             .cornerRadius(10)
     }
 }
+
+
+//// Preview
+struct CategoriesItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var selectedCategory: String? = "Dessert"
+        CategoryItemView(category: Categories.dummuCategory, selectedCategory: $selectedCategory)
+    }
+}
