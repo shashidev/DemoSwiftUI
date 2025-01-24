@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    let meal: Meals // Replace with your actual data model
+    let meal: Meals
 
     var body: some View {
         ScrollView {
