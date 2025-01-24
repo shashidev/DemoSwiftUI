@@ -7,7 +7,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject var viewModel = HomeViewModel()
     @State private var hasInitialized = false
 
     var body: some View {
@@ -40,15 +40,20 @@ struct HomeView: View {
         }
         .padding(.top)
     }
-
+    
     private var emptyStateView: some View {
         VStack {
+            Spacer()
             Text("No meals available.")
                 .font(.headline)
                 .foregroundColor(.gray)
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
     }
+
+
 
     private func initializeView() {
         guard !hasInitialized else { return }
@@ -64,8 +69,8 @@ struct HomeView: View {
 
 
 //// Preview
-//struct CategoriesListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoriesListView(viewModel: CategoryListViewModel())
-//    }
-//}
+struct CategoriesListView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(viewModel: HomeViewModel())
+    }
+}
