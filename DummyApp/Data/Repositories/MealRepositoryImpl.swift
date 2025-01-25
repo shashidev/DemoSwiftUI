@@ -16,7 +16,7 @@ class MealRepositoryImpl: MealRepository {
     
     
     func fetchMeal(for category: String) -> AnyPublisher<[Meals], NetworkError> {
-        return networking.request(endpoint: category == "All" ? .allMeals : .search(category: category))
+        return networking.request(endpoint: category == "All" ? AppEndPoint.allMeals : AppEndPoint.search(category: category))
             .tryMap { (response: MealResponse) -> [Meals] in
                 guard let items = response.meals else {
                     throw NetworkError.invalidResponse
@@ -31,7 +31,7 @@ class MealRepositoryImpl: MealRepository {
     }
     
     func fetchAllMeal() -> AnyPublisher<[Meals], NetworkError> {
-        return networking.request(endpoint: .allMeals)
+        return networking.request(endpoint: AppEndPoint.allMeals)
             .tryMap { (response: MealResponse) -> [Meals] in
                 guard let items = response.meals else {
                     throw NetworkError.invalidResponse

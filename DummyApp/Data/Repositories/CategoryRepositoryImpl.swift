@@ -18,7 +18,7 @@ class CategoryRepositoryImpl: CategoryRepository {
     
     
     func fetchCategories() -> AnyPublisher<[Categories], NetworkError> {
-        return networking.request(endpoint: .getCategory)
+        return networking.request(endpoint: AppEndPoint.getCategory)
             .tryMap { (response: CategoryResponse) -> [Categories] in
                 guard let items = response.categories else {
                     throw NetworkError.invalidResponse // Or a custom error

@@ -6,7 +6,12 @@
 import Foundation
 
 // Enum to define all API endpoints
-enum APIEndpoint {
+protocol APIEndpoint {
+    func urlRequest() -> URLRequest?
+}
+
+
+enum AppEndPoint: APIEndpoint {
     case getCategory
     case search(category: String)
     case allMeals
