@@ -6,17 +6,32 @@
 import Combine
 import Foundation
 
+/// The view model responsible for managing the state related to categories and meals
+/// and handling data fetching and transformation for the home screen.
 class HomeViewModel: ObservableObject {
+    
+    /// The list of categories to be displayed in the UI.
     @Published var categories: [Categories] = []
+    
+    /// The list of meals to be displayed in the UI.
     @Published var meals: [Meals] = []
+    
+    /// The default selected category.
     @Published var defaultCategory: String?
+    
+    /// A set to hold cancellables for the Combine framework to manage memory.
     private var cancellables = Set<AnyCancellable>()
+    
+    /// The service facade used to fetch categories and meals.
     private let mealServiceFacade: MealServiceFacade
 
+    /// Initializes the `HomeViewModel` with a provided or default `MealServiceFacade`.
+    /// - Parameter mealServiceFacade: The service facade used to fetch categories and meals (default is `MealServiceFacade`).
     init(mealServiceFacade: MealServiceFacade = MealServiceFacade()) {
         self.mealServiceFacade = mealServiceFacade
     }
 
+    /// Loads categories by calling the corresponding service method and handles the result.
     func loadItems() {
         mealServiceFacade.fetchCategories()
             .receive(on: DispatchQueue.main)
@@ -30,6 +45,8 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// Loads meals for a specific category by calling the corresponding service method and handles the result.
+    /// - Parameter category: The category for which meals should be fetched.
     func loadMeal(category: String) {
         mealServiceFacade.fetchMeals(for: category)
             .receive(on: DispatchQueue.main)
@@ -44,6 +61,7 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// Loads all meals by calling the corresponding service method and handles the result.
     func loadAllMeals() {
         mealServiceFacade.fetchAllMeals()
             .receive(on: DispatchQueue.main)
@@ -58,6 +76,8 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// Sets up categories, adding the "All" category to the list and assigning the default category.
+    /// - Parameter categories: The list of categories to be transformed and displayed.
     private func setupCategories(with categories: [Categories]) {
         let allCategory = Categories(strCategory: "All")
         var allCategories = [allCategory]
@@ -67,4 +87,5 @@ class HomeViewModel: ObservableObject {
         loadAllMeals()
     }
 }
+
 

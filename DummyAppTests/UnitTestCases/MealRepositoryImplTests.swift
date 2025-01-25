@@ -62,9 +62,10 @@ final class MealRepositoryImplTests: XCTestCase {
                  break
              }
          }, receiveValue: { meals in
-             XCTAssertEqual(meals.count, 2)
-             XCTAssertEqual(meals.first?.strMeal, "Meal 1")
-             XCTAssertEqual(meals.last?.strMeal, "Meal 2")
+             XCTAssertEqual(meals.count, 2, "Expected 2 meals, but found \(meals.count).")
+             XCTAssertEqual(meals.first?.strMeal, "Meal 1", "The first meal should be 'Meal 1', but found \(meals.first?.strMeal ?? "nil").")
+             XCTAssertEqual(meals.last?.strMeal, "Meal 2", "The last meal should be 'Meal 2', but found \(meals.last?.strMeal ?? "nil").")
+
          }).store(in: &cancellables)
      }
     
@@ -92,7 +93,7 @@ final class MealRepositoryImplTests: XCTestCase {
                  break
              }
          }, receiveValue: { meals in
-             XCTAssertTrue(meals.isEmpty)
+             XCTAssertTrue(meals.isEmpty, "Expected meals to be empty, but it contains \(meals.count) items.")
          }).store(in: &cancellables)
      }
     
@@ -107,7 +108,7 @@ final class MealRepositoryImplTests: XCTestCase {
         publisher.sink(receiveCompletion: { completion in
             switch completion {
             case .failure(let error):
-                XCTAssertEqual(error, NetworkError.invalidResponse)
+                XCTAssertEqual(error, NetworkError.invalidResponse, "Expected error to be .invalidResponse, but got \(error).")
             case .finished:
                 XCTFail("Expected failure, but got finished.")
             }
@@ -144,8 +145,8 @@ final class MealRepositoryImplTests: XCTestCase {
                 break
             }
         }, receiveValue: { meals in
-            XCTAssertEqual(meals.count, 1)
-            XCTAssertEqual(meals.first?.strMeal, "Meal 1")
+            XCTAssertEqual(meals.count, 1, "Expected 1 meal, but found \(meals.count) meals.")
+            XCTAssertEqual(meals.first?.strMeal, "Meal 1", "Expected the first meal to be 'Meal 1', but got \(meals.first?.strMeal ?? "nil").")
         }).store(in: &cancellables)
     }
 

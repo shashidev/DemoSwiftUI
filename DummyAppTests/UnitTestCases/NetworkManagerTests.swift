@@ -49,7 +49,7 @@ final class NetworkManagerTests: XCTestCase {
                     XCTFail("Expected success but got failure")
                 }
             }, receiveValue: { (response: MockResponse) in
-                XCTAssertEqual(response.strMeal, "Test Meal")
+                XCTAssertEqual(response.strMeal, "Test Meal", "Expected meal name to be 'Test Meal', but got '\(response.strMeal)'")
                 expectation.fulfill()
             })
             .store(in: &cancellables)
@@ -74,7 +74,7 @@ final class NetworkManagerTests: XCTestCase {
         networkManager.request(endpoint: MockEndpoint())
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
-                    XCTAssertNotNil(error)
+                    XCTAssertNotNil(error, "Expected error to be non-nil, but it was nil.")
                     expectation.fulfill()
                 } else {
                     XCTFail("Expected failure but got success")
@@ -104,7 +104,7 @@ final class NetworkManagerTests: XCTestCase {
         networkManager.request(endpoint: MockEndpoint())
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
-                    XCTAssertEqual(error, .decodingError)
+                    XCTAssertEqual(error, .decodingError, "Expected error to be .decodingError, but got \(error).")
                     expectation.fulfill()
                 } else {
                     XCTFail("Expected failure but got success")
@@ -132,7 +132,7 @@ final class NetworkManagerTests: XCTestCase {
         networkManager.request(endpoint: MockEndpoint())
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
-                    XCTAssertEqual(error, .requestFailed(urlError))
+                    XCTAssertEqual(error, .requestFailed(urlError), "Expected error to be .requestFailed with \(urlError), but got \(error).")
                     expectation.fulfill()
                 } else {
                     XCTFail("Expected failure but got success")

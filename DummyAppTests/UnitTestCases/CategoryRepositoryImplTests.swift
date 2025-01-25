@@ -61,9 +61,10 @@ final class CategoryRepositoryImplTests: XCTestCase {
                 break
             }
         }, receiveValue: { categories in
-            XCTAssertEqual(categories.count, 2)
-            XCTAssertEqual(categories.first?.strCategory, "Category 1")
-            XCTAssertEqual(categories.last?.strCategory, "Category 2")
+            XCTAssertEqual(categories.count, 2, "Expected 2 categories, but found \(categories.count) categories.")
+            XCTAssertEqual(categories.first?.strCategory, "Category 1", "The first category should be 'Category 1', but got '\(categories.first?.strCategory ?? "nil")'.")
+            XCTAssertEqual(categories.last?.strCategory, "Category 2", "The last category should be 'Category 2', but got '\(categories.last?.strCategory ?? "nil")'.")
+
         }).store(in: &cancellables)
     }
     
@@ -91,7 +92,7 @@ final class CategoryRepositoryImplTests: XCTestCase {
                  break
              }
          }, receiveValue: { meals in
-             XCTAssertTrue(meals.isEmpty)
+             XCTAssertTrue(meals.isEmpty, "Expected an empty categories array, but got \(meals.count) items.")
          }).store(in: &cancellables)
      }
     

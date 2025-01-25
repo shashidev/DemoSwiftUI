@@ -46,9 +46,9 @@ final class FetchMealUseCaseImplTests: XCTestCase {
                 break
             }
         }, receiveValue: { categories in
-            XCTAssertEqual(categories.count, 2)
-            XCTAssertEqual(categories.first?.strMeal, "Meal1")
-            XCTAssertEqual(categories.last?.strMeal, "Meal2")
+            XCTAssertEqual(categories.count, 2, "Expected categories to contain 2 items, but got \(categories.count).")
+            XCTAssertEqual(categories.first?.strMeal, "Meal1", "Expected first meal to be 'Meal1', but got \(categories.first?.strMeal ?? "nil").")
+            XCTAssertEqual(categories.last?.strMeal, "Meal2", "Expected last meal to be 'Meal2', but got \(categories.last?.strMeal ?? "nil").")
         }).store(in: &cancellables)
     }
     
@@ -62,7 +62,7 @@ final class FetchMealUseCaseImplTests: XCTestCase {
             .sink(receiveCompletion: { completion in
                 // Then
                 if case let .failure(error) = completion {
-                    XCTAssertEqual(error, .invalidResponse)
+                    XCTAssertEqual(error, .invalidResponse, "Expected error to be .invalidResponse, but got \(error).")
                     expectation.fulfill()
                 }
             }, receiveValue: { _ in
@@ -90,9 +90,9 @@ final class FetchMealUseCaseImplTests: XCTestCase {
                 break
             }
         }, receiveValue: { categories in
-            XCTAssertEqual(categories.count, 2)
-            XCTAssertEqual(categories.first?.strMeal, "Meal1")
-            XCTAssertEqual(categories.last?.strMeal, "Meal2")
+            XCTAssertEqual(categories.count, 2, "Expected 2 categories, but got \(categories.count).")
+            XCTAssertEqual(categories.first?.strMeal, "Meal1", "Expected first meal to be 'Meal1', but got \(categories.first?.strMeal ?? "nil").")
+            XCTAssertEqual(categories.last?.strMeal, "Meal2", "Expected last meal to be 'Meal2', but got \(categories.last?.strMeal ?? "nil").")
         }).store(in: &cancellables)
     }
     
@@ -106,7 +106,8 @@ final class FetchMealUseCaseImplTests: XCTestCase {
             .sink(receiveCompletion: { completion in
                 // Then
                 if case let .failure(error) = completion {
-                    XCTAssertEqual(error, .requestFailed(URLError(.notConnectedToInternet)))
+                    XCTAssertEqual(error, .requestFailed(URLError(.notConnectedToInternet)),
+                                   "Expected error to be .requestFailed with URLError(.notConnectedToInternet), but got \(error).")
                     expectation.fulfill()
                 }
             }, receiveValue: { _ in
