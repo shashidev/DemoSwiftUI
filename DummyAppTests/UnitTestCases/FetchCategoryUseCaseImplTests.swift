@@ -49,9 +49,10 @@ final class FetchCategoryUseCaseImplTests: XCTestCase {
                 break
             }
         }, receiveValue: { categories in
-            XCTAssertEqual(categories.count, 2)
-            XCTAssertEqual(categories.first?.strCategory, "Category 1")
-            XCTAssertEqual(categories.last?.strCategory, "Category 2")
+            XCTAssertEqual(categories.count, 2, "Expected 2 categories, but found \(categories.count).")
+            XCTAssertEqual(categories.first?.strCategory, "Category 1", "Expected the first category to be 'Category 1', but got \(categories.first?.strCategory ?? "nil").")
+            XCTAssertEqual(categories.last?.strCategory, "Category 2", "Expected the last category to be 'Category 2', but got \(categories.last?.strCategory ?? "nil").")
+            
         }).store(in: &cancellables)
     }
     
@@ -65,7 +66,7 @@ final class FetchCategoryUseCaseImplTests: XCTestCase {
                .sink(receiveCompletion: { completion in
                    // Then
                    if case let .failure(error) = completion {
-                       XCTAssertEqual(error, .invalidResponse)
+                       XCTAssertEqual(error, .invalidResponse, "Expected error to be .invalidResponse, but got \(error).")
                        expectation.fulfill()
                    }
                }, receiveValue: { _ in
