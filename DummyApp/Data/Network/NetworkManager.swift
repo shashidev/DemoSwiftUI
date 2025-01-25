@@ -7,9 +7,10 @@ import Foundation
 import Combine
 
 class NetworkManager: NetworkService {
-    private let session: URLSession
     
-    init(session: URLSession = .shared) {
+    private let session: URLSessionProtocol
+    
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     
@@ -21,7 +22,7 @@ class NetworkManager: NetworkService {
         
         print("Request: \(request.url?.absoluteString ?? "No URL")")
         
-        return session.dataTaskPublisher(for: request)
+        return session.publisher(for: request)
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse,
                       (200...299).contains(response.statusCode) else {
