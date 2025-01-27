@@ -16,7 +16,11 @@ struct HomeView: View {
                 categoryScrollView
                     .onAppear(perform: initializeView)
                 
-                if !viewModel.meals.isEmpty {
+                if viewModel.isloading {
+                    ProgressView("Loading meals...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if !viewModel.meals.isEmpty {
                     MealListView(meals: viewModel.meals)
                 } else {
                     emptyStateView
@@ -57,7 +61,7 @@ struct HomeView: View {
 
     private func initializeView() {
         guard !hasInitialized else { return }
-        viewModel.loadItems()
+        viewModel.loadCategories()
         hasInitialized = true
     }
 

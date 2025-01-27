@@ -11,7 +11,7 @@ struct MealListView: View {
     var body: some View {
         List(meals) { meal in
             NavigationLink(destination: MealDetailView(meal: meal)) {
-                CategoryImageView(imageUrl: meal.strMealThumb)
+                MealImageView(imageUrl: meal.strMealThumb)
                 Text(meal.strMeal ?? "")
                     .padding()
             }
