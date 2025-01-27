@@ -11,7 +11,7 @@ struct MealDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                MealImageView(imageURL: meal.strMealThumb)
+                MealDeatilImageView(imageURL: meal.strMealThumb)
                 MealView(meal: meal)
                 MealInstructionsView(instructions: meal.strInstructions)
                 Spacer()

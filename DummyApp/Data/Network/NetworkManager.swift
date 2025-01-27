@@ -24,11 +24,11 @@ class NetworkManager: NetworkService {
     func request<T: Decodable>(endpoint: APIEndpoint) -> AnyPublisher<T, NetworkError> {
         
         guard let request = endpoint.urlRequest() else {
-            print("Invalid URL request")
+            debugLog("Invalid URL request")
             return Fail(error: NetworkError.badURL).eraseToAnyPublisher()
         }
         
-        print("Request: \(request.url?.absoluteString ?? "No URL")")
+        debugLog("Request: \(request.url?.absoluteString ?? "No URL")")
         
         return session.publisher(for: request)
             .tryMap { output in
@@ -42,7 +42,7 @@ class NetworkManager: NetworkService {
             .decode(type: T.self, decoder: JSONDecoder())
             .retry(2)
             .mapError { error in
-                print("Error: \(error)")
+                debugLog("Error: \(error)")
                 return (error as? URLError) != nil ? NetworkError.requestFailed(error) : NetworkError.decodingError
             }
             .eraseToAnyPublisher()

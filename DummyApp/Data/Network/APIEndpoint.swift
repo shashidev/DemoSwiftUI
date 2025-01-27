@@ -37,10 +37,8 @@ enum AppEndPoint: APIEndpoint {
             return "GET"
         }
     }
-
-    /// The base URL for the API, depending on the build configuration.
-    var baseURL: URL {
-        // Different base URLs for debugging, testing, and production environments.
+    
+    static var currentBaseURL: URL = {
         #if DEBUG
         return URL(string: "https://www.themealdb.com/api/json/v1/1/")!
         #elseif TEST
@@ -48,6 +46,11 @@ enum AppEndPoint: APIEndpoint {
         #else
         return URL(string: "https://api.example.com")!
         #endif
+    }()
+
+    /// The base URL for the API, depending on the build configuration.
+    var baseURL: URL {
+        return AppEndPoint.currentBaseURL
     }
 
     /// Constructs a URLRequest for the current endpoint.

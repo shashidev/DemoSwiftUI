@@ -49,7 +49,7 @@ final class HomeViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         
-        viewModel.loadItems()
+        viewModel.loadCategories()
         
         // Assert
         wait(for: [expectation], timeout: 1.0)
@@ -62,7 +62,7 @@ final class HomeViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Error handled for categories fetch")
         
         // Act
-        viewModel.loadItems()
+        viewModel.loadCategories()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // No categories should be loaded
