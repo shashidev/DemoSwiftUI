@@ -2,8 +2,6 @@
 //  EnvironmentTests.swift
 //  DummyAppTests
 //
-//  Created by Shashi Kumar on 27/01/25.
-//
 
 import XCTest
 @testable import DummyApp

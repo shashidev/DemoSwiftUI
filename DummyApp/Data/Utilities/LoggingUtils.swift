@@ -2,8 +2,6 @@
 //  LoggingUtils.swift
 //  DummyApp
 //
-//  Created by Shashi Kumar on 27/01/25.
-//
 
 import Foundation
 
